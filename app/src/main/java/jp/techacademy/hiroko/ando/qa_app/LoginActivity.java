@@ -134,14 +134,14 @@ public class LoginActivity extends AppCompatActivity {
         // UIの準備
         setTitle("ログイン");
 
-        mEmailEditText = (EditText) findViewById(R.id.emailText);
-        mPasswordEditText = (EditText) findViewById(R.id.passwordText);
-        mNameEditText = (EditText) findViewById(R.id.nameText);
+        mEmailEditText = findViewById(R.id.emailText);
+        mPasswordEditText = findViewById(R.id.passwordText);
+        mNameEditText = findViewById(R.id.nameText);
 
         mProgress = new ProgressDialog(this);
         mProgress.setMessage("処理中...");
 
-        Button createButton = (Button) findViewById(R.id.createButton);
+        Button createButton = findViewById(R.id.createButton);
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

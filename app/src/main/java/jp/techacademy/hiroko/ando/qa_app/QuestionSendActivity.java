@@ -62,8 +62,8 @@ public class QuestionSendActivity extends AppCompatActivity implements View.OnCl
         // UIの準備
         setTitle("質問作成");
 
-        mTitleText = (EditText) findViewById(R.id.titleText);
-        mBodyText = (EditText) findViewById(R.id.bodyText);
+        mTitleText = findViewById(R.id.titleText);
+        mBodyText = findViewById(R.id.bodyText);
 
         mSendButton = (Button) findViewById(R.id.sendButton);
         mSendButton.setOnClickListener(this);
