@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ListView mListView;
     private ArrayList<Question> mQuestionArrayList;
     private QuestionsListAdapter mAdapter;
+    private NavigationView navigationView;
+    MenuItem menuItemfab;
 
     private ChildEventListener mEventListener = new ChildEventListener() {
         @Override
@@ -120,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
@@ -158,14 +161,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        //  ナビゲーションビュー
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        //  ナビゲーションビューのお気に入り
+        Menu menu = navigationView.getMenu();
+        menuItemfab = menu.findItem(R.id.nav_fab);
 
         // Firebase
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
         // ListViewの準備
-        mListView = (ListView) findViewById(R.id.listView);
+        mListView = findViewById(R.id.listView);
         mAdapter = new QuestionsListAdapter(this);
         mQuestionArrayList = new ArrayList<Question>();
         mAdapter.notifyDataSetChanged();
@@ -190,6 +197,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             NavigationView navigationView = findViewById(R.id.nav_view);
             onNavigationItemSelected(navigationView.getMenu().getItem(0));
         }
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user == null){
+            menuItemfab.setVisible(false);
+        }else{
+            menuItemfab.setVisible(true);
+        }
+
     }
 
     @Override
@@ -228,6 +243,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_compter) {
             mToolbar.setTitle("コンピューター");
             mGenre = 4;
+        } else if(id == R.id.nav_fab) {
+                mGenre = 0;
+                Intent intent = new Intent(getApplicationContext(), FabActivity.class);
+                startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
